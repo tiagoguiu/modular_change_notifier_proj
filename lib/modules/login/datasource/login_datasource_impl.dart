@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../../exports.dart';
 
 class LoginDatasourceImpl implements LoginDatasource {
@@ -5,8 +7,7 @@ class LoginDatasourceImpl implements LoginDatasource {
 
   LoginDatasourceImpl(this.storageService);
   @override
-  Future<void> saveUser() async {
-    // TODO: implement saveUser
-    throw UnimplementedError();
+  Future<void> saveUser(Map<String,dynamic> data) async {
+    await storageService.write('user', jsonEncode(data));
   }
 }

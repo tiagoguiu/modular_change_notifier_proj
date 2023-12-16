@@ -5,8 +5,7 @@ class LoginRepositoryImpl implements LoginRepository {
 
   LoginRepositoryImpl(this.datasource);
   @override
-  Future<void> saveUser() {
-    // TODO: implement saveUser
-    throw UnimplementedError();
+  Future<void> saveUser(UserModel user) async {
+    await datasource.saveUser(user.toMap());
   }
 }

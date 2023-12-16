@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../exports.dart';
 
@@ -12,7 +11,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  late final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late final TextEditingController nameController = TextEditingController();
+  late final TextEditingController passwordController = TextEditingController();
   late final FocusNode nameFocus = FocusNode();
   late final FocusNode passwordFocus = FocusNode();
   @override
@@ -20,6 +21,7 @@ class _LoginViewState extends State<LoginView> {
     nameController.dispose();
     nameFocus.dispose();
     passwordFocus.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -31,55 +33,61 @@ class _LoginViewState extends State<LoginView> {
           constraints: constraints,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              children: [
-                const Spacer(flex: 16),
-                /*ClipRRect(
-                  borderRadius: BorderRadius.circular(64),
-                  child: Image.asset(
-                    'assets/onebox_idtech_logo.jpg',
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  const Spacer(flex: 16),
+                  /*ClipRRect(
+                    borderRadius: BorderRadius.circular(64),
+                    child: Image.asset(
+                      'assets/onebox_idtech_logo.jpg',
+                    ),
+                  ),*/
+                  const Text(
+                    'Seja bem vindo!',
+                    style: TextStyle(fontSize: 32, fontFamily: 'Inter', fontWeight: FontWeight.w500, height: 2),
                   ),
-                ),*/
-                const Text(
-                  'Seja bem vindo!',
-                  style: TextStyle(fontSize: 32, fontFamily: 'Inter', fontWeight: FontWeight.w500, height: 2),
-                ),
-                const Spacer(),
-                TextFormFieldComponent(
-                  hint: 'Nome de usuário',
-                  controller: nameController,
-                  fieldFocus: nameFocus,
-                  nextFocus: passwordFocus,
-                  validator: loginValidator,
-                  textInputAction: TextInputAction.next,
-                ),
-                const Spacer(),
-                TextFormFieldComponent(
-                  hint: 'Senha',
-                  isPassword: true,
-                  fieldFocus: passwordFocus,
-                  validator: loginValidator,
-                ),
-                const Spacer(),
-                ListenableBuilder(
-                    listenable: widget.controller,
-                    builder: (context, child) {
-                      return SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                          onPressed: () {
-                            Modular.to.navigate('path');
-                          },
-                          child: const Text(
-                            'Entrar',
-                            style: TextStyle(color: Colors.white),
+                  const Spacer(),
+                  TextFormFieldComponent(
+                    hint: 'Nome de usuário',
+                    controller: nameController,
+                    fieldFocus: nameFocus,
+                    nextFocus: passwordFocus,
+                    validator: loginValidator,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  const Spacer(),
+                  TextFormFieldComponent(
+                    hint: 'Senha',
+                    isPassword: true,
+                    fieldFocus: passwordFocus,
+                    validator: loginValidator,
+                  ),
+                  const Spacer(),
+                  ListenableBuilder(
+                      listenable: widget.controller,
+                      builder: (context, child) {
+                        return SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                            onPressed: () {
+                              if (!(formKey.currentState?.validate() ?? false)) {
+                                return;
+                              }
+                              widget.controller.login(name: nameController.text, password: passwordController.text);
+                            },
+                            child: const Text(
+                              'Entrar',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
-                        ),
-                      );
-                    }),
-                const Spacer(flex: 16),
-              ],
+                        );
+                      }),
+                  const Spacer(flex: 16),
+                ],
+              ),
             ),
           ),
         ),
