@@ -4,7 +4,7 @@ String? loginValidator(String? value) {
   if (value == null || value.trim().isEmpty) {
     return 'O campo não pode ser vazio';
   }
-  if (!spaceRegexp.hasMatch(value)) {
+  if (spaceRegexp.hasMatch(value)) {
     return 'O campo não pode terminar com espaço vazio';
   }
   if (value.length < 2) {
