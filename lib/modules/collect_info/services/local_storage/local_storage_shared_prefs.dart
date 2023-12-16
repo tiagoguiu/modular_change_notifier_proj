@@ -6,9 +6,11 @@ import 'local_storage_service.dart';
 
 /// Types supported: [String]/[int]/[double]/[bool]/[List] <[String]>
 class LocalStorageSharedPrefs implements LocalStorageService {
-  final SharedPreferences _sharedPreferences;
+  late final SharedPreferences _sharedPreferences;
 
-  LocalStorageSharedPrefs(this._sharedPreferences);
+  Future<void> init() async {
+    _sharedPreferences = await SharedPreferences.getInstance();
+  }
 
   @override
   bool contains(String key) {

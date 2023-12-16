@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../exports.dart';
 
@@ -61,21 +62,22 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const Spacer(),
                 ListenableBuilder(
-                  listenable: widget.controller,
-                  builder: (context, child) {
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                        onPressed: () {},
-                        child: const Text(
-                          'Logar',
-                          style: TextStyle(color: Colors.white),
+                    listenable: widget.controller,
+                    builder: (context, child) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                          onPressed: () {
+                            Modular.to.navigate('path');
+                          },
+                          child: const Text(
+                            'Entrar',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                ),
+                      );
+                    }),
                 const Spacer(flex: 16),
               ],
             ),

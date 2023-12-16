@@ -1,13 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../exports.dart';
 
 class AppModule extends Module {
   @override
   void binds(Injector i) {
-    i.addLazySingleton(() => SharedPreferences.getInstance());
-    i.add(()=>LoginController());
+    i.addSingleton<LocalStorageService>(() => LocalStorageSharedPrefs()..init());
+    i.add<LoginDatasource>(() => LoginDatasourceImpl(Modular.get()));
+    i.add<LoginRepository>(() => LoginRepositoryImpl(Modular.get()));
+    i.add<LoginController>(() => LoginController(Modular.get()));
     super.binds(i);
   }
 
