@@ -20,7 +20,7 @@ class AppModule extends Module {
     );
     r.child(
       '/collect-info',
-      child: (_) => const CollectInfoView(),
+      child: (_) =>  CollectInfoView(controller: Modular.get<LoginController>()),
     );
     super.routes(r);
   }

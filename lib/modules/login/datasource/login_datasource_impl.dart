@@ -7,7 +7,12 @@ class LoginDatasourceImpl implements LoginDatasource {
 
   LoginDatasourceImpl(this.storageService);
   @override
-  Future<void> saveUser(Map<String,dynamic> data) async {
+  Future<void> saveUser(Map<String, dynamic> data) async {
     await storageService.write('user', jsonEncode(data));
+  }
+
+  @override
+  String getUser() {
+    return storageService.read('user');
   }
 }

@@ -66,25 +66,35 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   const Spacer(),
                   ListenableBuilder(
-                      listenable: widget.controller,
-                      builder: (context, child) {
-                        return SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                            onPressed: () {
-                              if (!(formKey.currentState?.validate() ?? false)) {
-                                return;
-                              }
-                              widget.controller.login(name: nameController.text, password: passwordController.text);
-                            },
+                    listenable: widget.controller,
+                    builder: (context, child) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                          onPressed: () {
+                            if (!(formKey.currentState?.validate() ?? false)) {
+                              return;
+                            }
+                            widget.controller.login(name: nameController.text, password: passwordController.text);
+                          },
+                          child: Visibility(
+                            replacement: const SizedBox(
+                              height: 26,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                            visible: !widget.controller.isLoading,
                             child: const Text(
                               'Entrar',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
-                        );
-                      }),
+                        ),
+                      );
+                    },
+                  ),
                   const Spacer(flex: 16),
                 ],
               ),
