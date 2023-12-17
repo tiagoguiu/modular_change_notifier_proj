@@ -9,6 +9,9 @@ class AppModule extends Module {
     i.add<LoginDatasource>(() => LoginDatasourceImpl(Modular.get()));
     i.add<LoginRepository>(() => LoginRepositoryImpl(Modular.get()));
     i.add<LoginController>(() => LoginController(Modular.get()));
+    i.add<CollectInfoDatasource>(() => CollectInfoDatasourceImpl(Modular.get()));
+    i.add<CollectInfoRepository>(() => CollectInfoRepositoryImpl(Modular.get()));
+    i.add<CollectInfoController>(() => CollectInfoController(Modular.get()));
     super.binds(i);
   }
 
@@ -20,7 +23,10 @@ class AppModule extends Module {
     );
     r.child(
       '/collect-info',
-      child: (_) =>  CollectInfoView(controller: Modular.get<LoginController>()),
+      child: (_) => CollectInfoView(
+        controller: Modular.get<LoginController>(),
+        infoController: Modular.get<CollectInfoController>(),
+      ),
     );
     super.routes(r);
   }

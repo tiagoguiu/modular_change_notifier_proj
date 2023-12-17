@@ -4,7 +4,8 @@ import '../../../exports.dart';
 
 class CollectInfoView extends StatefulWidget {
   final LoginController controller;
-  const CollectInfoView({super.key, required this.controller});
+  final CollectInfoController infoController;
+  const CollectInfoView({super.key, required this.controller, required this.infoController});
 
   @override
   State<CollectInfoView> createState() => _CollectInfoViewState();
