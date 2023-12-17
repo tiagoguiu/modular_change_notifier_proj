@@ -12,3 +12,9 @@ String? loginValidator(String? value) {
   }
   return null;
 }
+String? emptyValidator(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return 'O campo não pode ser vazio';
+  }
+  return null;
+}

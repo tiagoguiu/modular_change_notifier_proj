@@ -13,7 +13,7 @@ class LoginController extends ChangeNotifier {
   Future<void> login({required String name, required String password}) async {
     isLoading = true;
     notifyListeners();
-    await repository.saveUser(UserModel(name: name, password: password));
+    await repository.saveUser(name,password);
     isLoading = false;
     notifyListeners();
     Modular.to.navigate('/collect-info');
