@@ -20,7 +20,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void initState() {
-    super.initState();  
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
         await Modular.get<LocalStorageService>().init();
@@ -53,12 +53,6 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 children: [
                   const Spacer(flex: 16),
-                  /*ClipRRect(
-                    borderRadius: BorderRadius.circular(64),
-                    child: Image.asset(
-                      'assets/onebox_idtech_logo.jpg',
-                    ),
-                  ),*/
                   const Text(
                     'Seja bem vindo!',
                     style: TextStyle(fontSize: 32, fontFamily: 'Inter', fontWeight: FontWeight.w500, height: 2),

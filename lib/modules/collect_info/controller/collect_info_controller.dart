@@ -11,6 +11,7 @@ class CollectInfoController extends ChangeNotifier {
 
   Future<void> addInfo(String info) async {
     await repository.saveInfo(info);
+    items.add(info);
     notifyListeners();
   }
 
