@@ -8,6 +8,7 @@ class LoginController extends ChangeNotifier {
   LoginController(this.repository);
 
   bool isLoading = false;
+  UserModel? get user => repository.getUser();
 
   Future<void> login({required String name, required String password}) async {
     isLoading = true;
@@ -18,5 +19,4 @@ class LoginController extends ChangeNotifier {
     Modular.to.navigate('/collect-info');
   }
 
-  UserModel get user => repository.getUser();
 }

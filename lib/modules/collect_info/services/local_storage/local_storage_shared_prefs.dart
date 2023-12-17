@@ -8,10 +8,11 @@ import 'local_storage_service.dart';
 class LocalStorageSharedPrefs implements LocalStorageService {
   late final SharedPreferences _sharedPreferences;
 
+  @override
   Future<void> init() async {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
-
+  
   @override
   bool contains(String key) {
     return _sharedPreferences.containsKey(key);

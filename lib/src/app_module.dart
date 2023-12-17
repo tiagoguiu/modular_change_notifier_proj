@@ -5,7 +5,7 @@ import '../exports.dart';
 class AppModule extends Module {
   @override
   void binds(Injector i) {
-    i.addSingleton<LocalStorageService>(() => LocalStorageSharedPrefs()..init());
+    i.addSingleton<LocalStorageService>(() => LocalStorageSharedPrefs());
     i.add<LoginDatasource>(() => LoginDatasourceImpl(Modular.get()));
     i.add<LoginRepository>(() => LoginRepositoryImpl(Modular.get()));
     i.add<LoginController>(() => LoginController(Modular.get()));

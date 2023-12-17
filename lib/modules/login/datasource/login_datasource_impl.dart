@@ -12,7 +12,7 @@ class LoginDatasourceImpl implements LoginDatasource {
   }
 
   @override
-  String getUser() {
-    return storageService.read('user');
+  String? getUser() {
+    return storageService.contains('user') ? storageService.read('user') : null;
   }
 }

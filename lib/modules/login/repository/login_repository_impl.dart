@@ -12,7 +12,8 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  UserModel getUser() {
-    return UserModel.fromMap(jsonDecode(datasource.getUser()));
+  UserModel? getUser() {
+    final user = datasource.getUser();
+    return user != null ? UserModel.fromMap(jsonDecode(user)) : null;
   }
 }

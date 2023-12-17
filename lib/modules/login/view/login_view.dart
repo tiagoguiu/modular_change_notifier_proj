@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../exports.dart';
 
@@ -16,6 +17,20 @@ class _LoginViewState extends State<LoginView> {
   late final TextEditingController passwordController = TextEditingController();
   late final FocusNode nameFocus = FocusNode();
   late final FocusNode passwordFocus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();  
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        await Modular.get<LocalStorageService>().init();
+        if (widget.controller.user != null) {
+          Modular.to.navigate('/collect-info');
+        }
+      },
+    );
+  }
+
   @override
   void dispose() {
     nameController.dispose();
