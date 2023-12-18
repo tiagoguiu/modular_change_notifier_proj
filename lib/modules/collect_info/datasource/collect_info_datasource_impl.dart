@@ -30,7 +30,7 @@ class CollectInfoDatasourceImpl implements CollectInfoDatasource {
   }
 
   @override
-  Future<List<String>> getItems() async {
+  List<String> getItems()  {
     List<String> items = [];
     if (storage.contains('info')) {
       final savedItems = storage.read<List<String>>('info');

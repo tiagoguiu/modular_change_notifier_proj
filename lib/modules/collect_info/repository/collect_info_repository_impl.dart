@@ -15,7 +15,7 @@ class CollectInfoRepositoryImpl implements CollectInfoRepository {
   }
 
   @override
-  Future<List<String>> getItems() async {
-    return await datasource.getItems();
+  List<String> getItems()  {
+    return  datasource.getItems();
   }
 }

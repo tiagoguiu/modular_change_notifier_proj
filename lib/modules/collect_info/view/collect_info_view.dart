@@ -15,7 +15,6 @@ class _CollectInfoViewState extends State<CollectInfoView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<AnimatedListState> animatedKey = GlobalKey<AnimatedListState>();
   late final TextEditingController infoController = TextEditingController();
-  late final Future<void> intialFunction = widget.infoController.getItems();
 
   Future<void> removeItem(int index, String item) async {
     await widget.infoController.deleteItem(item);
@@ -27,11 +26,17 @@ class _CollectInfoViewState extends State<CollectInfoView> {
   }
 
   Future<void> addItem() async {
+    await widget.infoController.addInfo(infoController.text);
     animatedKey.currentState?.insertItem(
       0,
       duration: const Duration(milliseconds: 600),
     );
-    await widget.infoController.addInfo(infoController.text);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.infoController.getItems();
   }
 
   @override
@@ -77,7 +82,19 @@ class _CollectInfoViewState extends State<CollectInfoView> {
                           if (!(formKey.currentState?.validate() ?? false)) {
                             return;
                           }
-                          addItem();
+                          showModalBottomSheet(
+                            context: context,
+                            constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                            builder: (context) {
+                              return ConfimActionModal(
+                                mainTextButton: 'Desejo adicionar',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  addItem();
+                                },
+                              );
+                            },
+                          );
                         },
                         child: const Text(
                           'Adicionar',
@@ -87,30 +104,39 @@ class _CollectInfoViewState extends State<CollectInfoView> {
                       ),
                     ),
                     SizedBox(height: constraints.maxHeight * 0.03),
-                    FutureBuilder(
-                      future: intialFunction,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return Expanded(
-                            child: AnimatedList(
-                              key: animatedKey,
-                              shrinkWrap: true,
-                              reverse: true,
-                              initialItemCount: widget.infoController.items.length,
-                              itemBuilder: (context, index, animation) {
-                                final String item = widget.infoController.items[index];
-                                return CollectInfoCard(
-                                  title: item,
-                                  onDelete: () => removeItem(index, item),
-                                  animation: animation,
+                    ListenableBuilder(
+                      listenable: widget.infoController,
+                      builder: (context, child) => Expanded(
+                        child: AnimatedList(
+                          key: animatedKey,
+                          shrinkWrap: true,
+                          reverse: true,
+                          initialItemCount: widget.infoController.items.length,
+                          itemBuilder: (context, index, animation) {
+                            final String item = widget.infoController.items[index];
+                            return CollectInfoCard(
+                              title: item,
+                              onDelete: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                                  builder: (context) {
+                                    return ConfimActionModal(
+                                      mainTextButton: 'Desejo remover',
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        removeItem(index, item);
+                                      },
+                                    );
+                                  },
                                 );
                               },
-                            ),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    )
+                              animation: animation,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

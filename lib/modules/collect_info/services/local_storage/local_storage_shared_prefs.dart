@@ -12,7 +12,7 @@ class LocalStorageSharedPrefs implements LocalStorageService {
   Future<void> init() async {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
-  
+
   @override
   bool contains(String key) {
     return _sharedPreferences.containsKey(key);
@@ -39,15 +39,15 @@ class LocalStorageSharedPrefs implements LocalStorageService {
   Future<void> write<T>(String key, T value) async {
     try {
       if (T == String) {
-        _sharedPreferences.setString(key, value as String);
+        await _sharedPreferences.setString(key, value as String);
       } else if (T == int) {
-        _sharedPreferences.setInt(key, value as int);
+        await _sharedPreferences.setInt(key, value as int);
       } else if (T == bool) {
-        _sharedPreferences.setBool(key, value as bool);
+        await _sharedPreferences.setBool(key, value as bool);
       } else if (T == double) {
-        _sharedPreferences.setDouble(key, value as double);
+        await _sharedPreferences.setDouble(key, value as double);
       } else if (T == List<String>) {
-        _sharedPreferences.setStringList(key, value as List<String>);
+        await _sharedPreferences.setStringList(key, value as List<String>);
       } else {
         const String message = 'Type not supported';
         throw Exception(message);

@@ -15,8 +15,8 @@ class CollectInfoController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getItems() async {
-    final fetchedItems = await repository.getItems();
+  void getItems()  {
+    final fetchedItems =  repository.getItems();
     items.addAll(fetchedItems);
     notifyListeners();
   }
